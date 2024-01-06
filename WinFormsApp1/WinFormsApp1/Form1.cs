@@ -59,18 +59,77 @@ namespace WinFormsApp1
                 }
             }
             /* конец покраски */
+                        
         }
 
-        static void Generator() //Базовое заполнение
+        public void BasicFill()
         {
-            for (int i = 0; i < grid.GetLength(0); i++)
+            for (int i = 0; i < 9; i++)
             {
-                for (int j = 0; j < grid.GetLength(1); j++)
+                for (int j = 0; j < 9; j++)
                 {
-                    grid[i, j] = ((i * 3 + i / 3 + j) % 9 + 1); 
+                    grid[i, j] = ((i * 3 + i / 3 + j) % 9 + 1);  //Базовое заполнение
                 }
             }
         }
+
+
+        
+
+        public void Filling()
+        {
+            int rows = dataGridView1.RowCount;
+            int cols = dataGridView1.ColumnCount;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (grid[i, j] != -1)
+                        dataGridView1.Rows[i].Cells[j].Value = grid[i, j];
+                    else continue;
+                }
+            }
+        }
+
+        public static void Deleting(int delete0)
+        {
+            for (int k = 0; k < delete0; k++)
+            {
+                int i = ran.Next() % 9;
+                int j = ran.Next() % 9;
+                if (!zeroGrid[i, j]) //Проверка на пустую ячейку
+                {
+                    grid[i, j] = -1;
+                    zeroGrid[i, j] = !zeroGrid[i, j];
+                }
+                else { k--; }
+            }
+        }
+
+        private void СложныйToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //делаем отмеченным нужный уровень сложности
+            сложныйToolStripMenuItem.Checked = true;
+            среднийToolStripMenuItem.Checked = false;
+            легкийToolStripMenuItem1.Checked = false;
+        }
+
+        private void СреднийToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //делаем отмеченным нужный уровень сложности
+            сложныйToolStripMenuItem.Checked = false;
+            среднийToolStripMenuItem.Checked = true;
+            легкийToolStripMenuItem1.Checked= false;
+        }
+
+        private void ЛегкийToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            //делаем отмеченным нужный уровень сложности
+            сложныйToolStripMenuItem.Checked = false;
+            среднийToolStripMenuItem.Checked = false;
+            легкийToolStripMenuItem1.Checked = true; //установлен по умолчанию
+        }
+
         static void Transponing() //Транспонирование
         {
             for (int i = 0; i < 9; i++)
@@ -86,7 +145,6 @@ namespace WinFormsApp1
 
         static void SwapRows() //Замена рядов
         {
-            Random ran = new Random();
             int first = ran.Next(1, 3);
             int second = ran.Next(1, 3);
             int third = ran.Next(4, 6);
@@ -113,7 +171,6 @@ namespace WinFormsApp1
             }
 
         }
-
         static void SwapColumns() //Замена столбцов
         {
             Transponing();
@@ -121,55 +178,19 @@ namespace WinFormsApp1
             Transponing();
         }
 
-        public void Filling()
-        {
-            int rows = dataGridView1.RowCount;
-            int cols = dataGridView1.ColumnCount;
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    if (grid[i, j] != -1)
-                        dataGridView1.Rows[0].Cells[i].Value = grid[i, j];
-                    else continue;
-                }
-            }
-        }
-
-        private void СложныйToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //делаем отмеченным нужный уровень сложности
-            сложныйToolStripMenuItem.Checked = true;
-            среднийToolStripMenuItem.Checked = false;
-            легкийToolStripMenuItem1.Checked = false;
-        }
-
-        private void СреднийToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //делаем отмеченным нужный уровень сложности
-            сложныйToolStripMenuItem.Checked = false;
-            среднийToolStripMenuItem.Checked = true;
-            легкийToolStripMenuItem1.Checked= false;
-        }
-
-        private void ЛегкийToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            //делаем отмеченным нужный уровень сложности
-            сложныйToolStripMenuItem.Checked = false;
-            среднийToolStripMenuItem.Checked = false;
-            легкийToolStripMenuItem1.Checked = true; //установлен по умолчанию
-        }              
-
         private void НоваяИграToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //создание нового поля
             grid = new int[9, 9];
             zeroGrid = new bool[9, 9];
 
             dataGridView1.Rows.Clear(); //очищаем поле для генерации нового уровня
+
             GenerateMap(); //генерируем карту
-            int mixx = ran.Next(50, 500); //количество перемешиваний
-            Generator(); //заполняем карту
-            for (int i = 0; i < mixx; i++)
+            BasicFill();
+
+            int mixx = ran.Next(40, 50);
+            for(int i = 0; i < mixx; i++)
             {
                 Transponing();
                 SwapRows();
@@ -181,53 +202,21 @@ namespace WinFormsApp1
             {
                 //удаляем некоторые значения в клетках рандомно
                 int delete1 = ran.Next(56, 61);
-                for (int k = 0; k < delete1; k++)
-                {
-                    int i = ran.Next() % 9;
-                    int j = ran.Next() % 9;
-                    if (!zeroGrid[i, j]) //Проверка на пустую ячейку
-                    {
-                        grid[i, j] = -1;
-                        zeroGrid[i, j] = !zeroGrid[i, j];
-                    }
-                    else { k--; }
-                }
-                Filling();
+                Deleting(delete1);
             }
             else if (среднийToolStripMenuItem.Checked)
             {
                 //удаляем некоторые значения в клетках рандомно
                 int delete2 = ran.Next(51, 56);
-                for (int k = 0; k < delete2; k++)
-                {
-                    int i = ran.Next() % 9;
-                    int j = ran.Next() % 9;
-                    if (!zeroGrid[i, j]) //Проверка на пустую ячейку
-                    {
-                        grid[i, j] = -1;
-                        zeroGrid[i, j] = !zeroGrid[i, j];
-                    }
-                    else { k--; }
-                }
-                Filling();
+                Deleting(delete2);
             }
             else if (легкийToolStripMenuItem1.Checked)
             {
                 //удаляем некоторые значения в клетках рандомно
                 int delete3 = ran.Next(46, 51);
-                for (int k = 0; k < delete3; k++)
-                {
-                    int i = ran.Next() % 9;
-                    int j = ran.Next() % 9;
-                    if (!zeroGrid[i, j]) //Проверка на пустую ячейку
-                    {
-                        grid[i, j] = -1;
-                        zeroGrid[i, j] = !zeroGrid[i, j];
-                    }
-                    else { k--; }
-                }
-                Filling();
-            }    
+                Deleting(delete3);
+            }
+            Filling();
             /* конец расстановок */
         }
     }
