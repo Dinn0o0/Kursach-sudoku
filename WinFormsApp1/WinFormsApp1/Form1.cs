@@ -71,10 +71,7 @@ namespace WinFormsApp1
                     grid[i, j] = ((i * 3 + i / 3 + j) % 9 + 1);  //Базовое заполнение
                 }
             }
-        }
-
-
-        
+        }        
 
         public void Filling()
         {
@@ -177,9 +174,27 @@ namespace WinFormsApp1
             SwapRows();
             Transponing();
         }
+        
+        /*private bool CheckingMap()
+        {
+            int rows = dataGridView1.RowCount;
+            int cols = dataGridView1.ColumnCount;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (grid[i, j] != -1)
+                        dataGridView1.Rows[i].Cells[j].Value = grid[i, j];
+                    else continue;
+                }
+            }
+            return true;
+        }*/
 
         private void НоваяИграToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            label1.Visible = false;
+
             //создание нового поля
             grid = new int[9, 9];
             zeroGrid = new bool[9, 9];
@@ -197,27 +212,34 @@ namespace WinFormsApp1
                 SwapColumns();
             }
 
-            /* расставляем цифры */
-            if (сложныйToolStripMenuItem.Checked)
+            //if (CheckingMap())
             {
-                //удаляем некоторые значения в клетках рандомно
-                int delete1 = ran.Next(56, 61);
-                Deleting(delete1);
+                /* расставляем цифры */
+                if (сложныйToolStripMenuItem.Checked)
+                {
+                    //удаляем некоторые значения в клетках рандомно
+                    int delete1 = ran.Next(56, 61);
+                    Deleting(delete1);
+                }
+                else if (среднийToolStripMenuItem.Checked)
+                {
+                    //удаляем некоторые значения в клетках рандомно
+                    int delete2 = ran.Next(51, 56);
+                    Deleting(delete2);
+                }
+                else if (легкийToolStripMenuItem1.Checked)
+                {
+                    //удаляем некоторые значения в клетках рандомно
+                    int delete3 = ran.Next(46, 51);
+                    Deleting(delete3);
+                }
+                Filling();
+                /* конец расстановок */
             }
-            else if (среднийToolStripMenuItem.Checked)
+            /*else
             {
-                //удаляем некоторые значения в клетках рандомно
-                int delete2 = ran.Next(51, 56);
-                Deleting(delete2);
-            }
-            else if (легкийToolStripMenuItem1.Checked)
-            {
-                //удаляем некоторые значения в клетках рандомно
-                int delete3 = ran.Next(46, 51);
-                Deleting(delete3);
-            }
-            Filling();
-            /* конец расстановок */
+                label1.Visible = true;
+            }*/
         }
     }
 }

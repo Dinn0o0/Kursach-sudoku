@@ -45,6 +45,7 @@
             Column7 = new DataGridViewTextBoxColumn();
             Column8 = new DataGridViewTextBoxColumn();
             Column9 = new DataGridViewTextBoxColumn();
+            label1 = new Label();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -152,11 +153,22 @@
             Column9.HeaderText = "";
             Column9.Name = "Column9";
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(429, 36);
+            label1.Name = "label1";
+            label1.Size = new Size(86, 17);
+            label1.TabIndex = 3;
+            label1.Text = "Restart game";
+            label1.Visible = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(554, 561);
+            Controls.Add(label1);
             Controls.Add(dataGridView1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
@@ -187,5 +199,6 @@
         private DataGridViewTextBoxColumn Column7;
         private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column9;
+        private Label label1;
     }
 }
