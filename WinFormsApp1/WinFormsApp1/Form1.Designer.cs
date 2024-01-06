@@ -46,13 +46,14 @@
             Column8 = new DataGridViewTextBoxColumn();
             Column9 = new DataGridViewTextBoxColumn();
             label1 = new Label();
+            checkToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { легкийToolStripMenuItem, новаяИграToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { легкийToolStripMenuItem, новаяИграToolStripMenuItem, checkToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(554, 25);
@@ -158,10 +159,17 @@
             label1.AutoSize = true;
             label1.Location = new Point(429, 36);
             label1.Name = "label1";
-            label1.Size = new Size(86, 17);
+            label1.Size = new Size(73, 17);
             label1.TabIndex = 3;
-            label1.Text = "Restart game";
+            label1.Text = "Всё верно!";
             label1.Visible = false;
+            // 
+            // checkToolStripMenuItem
+            // 
+            checkToolStripMenuItem.Name = "checkToolStripMenuItem";
+            checkToolStripMenuItem.Size = new Size(86, 21);
+            checkToolStripMenuItem.Text = "Проверить";
+            checkToolStripMenuItem.Click += CheckToolStripMenuItem_Click;
             // 
             // Form1
             // 
@@ -200,5 +208,6 @@
         private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column9;
         private Label label1;
+        private ToolStripMenuItem checkToolStripMenuItem;
     }
 }

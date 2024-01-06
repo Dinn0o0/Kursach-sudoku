@@ -3,7 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 
 namespace WinFormsApp1
-{    
+{
     public partial class Form1 : Form
     {
         static int[,] grid = new int[9, 9];
@@ -14,23 +14,23 @@ namespace WinFormsApp1
             InitializeComponent();
             GenerateMap();
         }
-                
+
         public void GenerateMap() //создание пустого поля
         {
             for (int i = 0; i < 8; i++) //первая строка уже есть
             {
-                dataGridView1.Rows.Add();
+                dataGridView1.Rows.Add(); //добавляет строки в dataGridView1
             }
 
             /* делаем красивое поле */
             for (int i = 0; i < 9; i++) //здесь происходит выравнивание размеров ячеек
             {
-                DataGridViewColumn column = dataGridView1.Columns[i];
-                column.Width = (int)(dataGridView1.Width / 9f);
-                DataGridViewRow row = dataGridView1.Rows[i];
+                DataGridViewColumn column = dataGridView1.Columns[i]; //выбор i-го столбца
+                column.Width = (int)(dataGridView1.Width / 9f); //деление пространства dataGridView1 на 9 частей
+                DataGridViewRow row = dataGridView1.Rows[i]; // см выше
                 row.Height = (int)(dataGridView1.Height / 9f);
             }
-            dataGridView1.Width = dataGridView1.Columns[1].Width * 9;
+            dataGridView1.Width = dataGridView1.Columns[1].Width * 9; //коррекция ширины
             /* теперь поле ровное */
 
             /* покраска поля */
@@ -38,7 +38,7 @@ namespace WinFormsApp1
             {
                 for (int j = 0; j < 9; j++)
                 {
-                    dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.LightCyan;
+                    dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.LightCyan; //красим в голубой
                 }
             }
 
@@ -59,10 +59,9 @@ namespace WinFormsApp1
                 }
             }
             /* конец покраски */
-                        
         }
 
-        public void BasicFill()
+        public void BasicFill() //хорошее готовое поле. Но оно полностью заполнено. Полностью решено
         {
             for (int i = 0; i < 9; i++)
             {
@@ -71,7 +70,7 @@ namespace WinFormsApp1
                     grid[i, j] = ((i * 3 + i / 3 + j) % 9 + 1);  //Базовое заполнение
                 }
             }
-        }        
+        }
 
         public void Filling()
         {
@@ -81,9 +80,12 @@ namespace WinFormsApp1
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    if (grid[i, j] != -1)
+                    if (grid[i, j] != -1) //если ячейка не пустая
+                    {
                         dataGridView1.Rows[i].Cells[j].Value = grid[i, j];
-                    else continue;
+                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.LightPink; //заливка ячеек по умолчанию
+                    }
+                    else continue; //проходим далее
                 }
             }
         }
@@ -92,7 +94,7 @@ namespace WinFormsApp1
         {
             for (int k = 0; k < delete0; k++)
             {
-                int i = ran.Next() % 9;
+                int i = ran.Next() % 9; //случайное число выбирается и находится остаток от деления на 9
                 int j = ran.Next() % 9;
                 if (!zeroGrid[i, j]) //Проверка на пустую ячейку
                 {
@@ -103,6 +105,7 @@ namespace WinFormsApp1
             }
         }
 
+        /* реакции на нажатие */
         private void СложныйToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //делаем отмеченным нужный уровень сложности
@@ -116,7 +119,7 @@ namespace WinFormsApp1
             //делаем отмеченным нужный уровень сложности
             сложныйToolStripMenuItem.Checked = false;
             среднийToolStripMenuItem.Checked = true;
-            легкийToolStripMenuItem1.Checked= false;
+            легкийToolStripMenuItem1.Checked = false;
         }
 
         private void ЛегкийToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -126,8 +129,9 @@ namespace WinFormsApp1
             среднийToolStripMenuItem.Checked = false;
             легкийToolStripMenuItem1.Checked = true; //установлен по умолчанию
         }
+        /* закончились реакции */
 
-        static void Transponing() //Транспонирование
+        static void Transponing() //Транспонирование. Решаемость не меняется
         {
             for (int i = 0; i < 9; i++)
             {
@@ -140,14 +144,21 @@ namespace WinFormsApp1
             }
         }
 
-        static void SwapRows() //Замена рядов
+        static void SwapRows() //строки в тройках меняются местами
         {
+            //первая тройка
             int first = ran.Next(1, 3);
             int second = ran.Next(1, 3);
+
+            //вторая тройка
             int third = ran.Next(4, 6);
             int fourth = ran.Next(4, 6);
+
+            //третья тройка
             int fifth = ran.Next(7, 9);
             int sixth = ran.Next(7, 9);
+
+            //начинаем перемешивать
             for (int k = 0; k < 9; k++)
             {
                 int tmp = grid[first - 1, k];
@@ -169,13 +180,13 @@ namespace WinFormsApp1
 
         }
         static void SwapColumns() //Замена столбцов
-        {
-            Transponing();
-            SwapRows();
-            Transponing();
+        { //гарантировано, что меняются только столбцы в тройках
+            Transponing(); //превращаем столбцы в строки
+            SwapRows(); //перемешивание строк
+            Transponing(); //транспонирование
         }
-        
-        /*private bool CheckingMap()
+
+        private bool CheckingMap()
         {
             int rows = dataGridView1.RowCount;
             int cols = dataGridView1.ColumnCount;
@@ -189,7 +200,7 @@ namespace WinFormsApp1
                 }
             }
             return true;
-        }*/
+        }
 
         private void НоваяИграToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -204,42 +215,91 @@ namespace WinFormsApp1
             GenerateMap(); //генерируем карту
             BasicFill();
 
-            int mixx = ran.Next(40, 50);
-            for(int i = 0; i < mixx; i++)
+            int mixx = ran.Next(10, 100); //выбираем число перемешиваний. Можно не 40. И не 50
+            //гарантировано, что поле решаемо
+            for (int i = 0; i < mixx; i++)
             {
                 Transponing();
                 SwapRows();
                 SwapColumns();
             }
 
-            //if (CheckingMap())
+            /* удаляем цифры */
+            if (сложныйToolStripMenuItem.Checked)
             {
-                /* расставляем цифры */
-                if (сложныйToolStripMenuItem.Checked)
-                {
-                    //удаляем некоторые значения в клетках рандомно
-                    int delete1 = ran.Next(56, 61);
-                    Deleting(delete1);
-                }
-                else if (среднийToolStripMenuItem.Checked)
-                {
-                    //удаляем некоторые значения в клетках рандомно
-                    int delete2 = ran.Next(51, 56);
-                    Deleting(delete2);
-                }
-                else if (легкийToolStripMenuItem1.Checked)
-                {
-                    //удаляем некоторые значения в клетках рандомно
-                    int delete3 = ran.Next(46, 51);
-                    Deleting(delete3);
-                }
-                Filling();
-                /* конец расстановок */
+                //удаляем некоторые значения в клетках рандомно
+                int delete1 = ran.Next(56, 61);
+                Deleting(delete1);
             }
-            /*else
+            else if (среднийToolStripMenuItem.Checked)
             {
-                label1.Visible = true;
-            }*/
+                //удаляем некоторые значения в клетках рандомно
+                int delete2 = ran.Next(51, 56);
+                Deleting(delete2);
+            }
+            else if (легкийToolStripMenuItem1.Checked)
+            {
+                //удаляем некоторые значения в клетках рандомно
+                int delete3 = ran.Next(46, 51);
+                Deleting(delete3);
+            }
+            Filling();
+            /* конец расстановок */
+        }
+
+        private void CheckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int rows = dataGridView1.RowCount;
+            int cols = dataGridView1.ColumnCount;
+
+            //заполняем сетку
+            for (int i = 0; i < rows; i++)
+            {
+                int f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0, f6 = 0, f7 = 0, f8 = 0, f9 = 0;
+                for (int j = 0; j < cols; j++)
+                {
+                    if (Convert.ToString(dataGridView1.Rows[i].Cells[j].Value) != "")
+                    {
+                        grid[i, j] = Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value);
+                        switch (grid[i, j])
+                        {
+                            case 1: f1++; break;
+                            case 2: f2++; break;
+                            case 3: f3++; break;
+                            case 4: f4++; break;
+                            case 5: f5++; break;
+                            case 6: f6++; break;
+                            case 7: f7++; break;
+                            case 8: f8++; break;
+                            case 9: f9++; break;
+                        }
+                    }
+                }
+
+                //извлекаем флаги-счетчики
+                if(f1 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (Convert.ToString(dataGridView1.Rows[i].Cells[j].Value) == "1" && zeroGrid[i, j])
+                        {
+                            dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.Red; //красим циферки
+                        }
+                    }
+                }
+                if (f2 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (Convert.ToString(dataGridView1.Rows[i].Cells[j].Value) == "2" && zeroGrid[i, j])
+                        {
+                            dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.Red; //красим циферки
+                        }
+                    }
+                }
+                //сделать то же для остальных цифр
+            }
+
         }
     }
 }
