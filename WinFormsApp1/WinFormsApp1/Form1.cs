@@ -1,6 +1,10 @@
 using System.CodeDom.Compiler;
 using System.Data;
 using System.Windows.Forms;
+using System;
+//using System.Threading;
+using System.Threading.Tasks;
+
 
 namespace WinFormsApp1
 {
@@ -247,6 +251,24 @@ namespace WinFormsApp1
             /* конец расстановок */
         }
 
+        /* хорошая, но не эффективная вещь */
+        /*public static async Task AddDelayExample()
+        {
+            // Wait for 5 seconds
+            await Task.Delay(5000);
+        }*/
+
+        private void ColoringFore(int i, int j)
+        {
+            
+            dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.Red; //красим циферки
+            /*Task.Run(async delegate
+            {
+                await AddDelayExample();
+            }).Wait();*/
+            //dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.Black; //back to black
+        }
+
         private void CheckToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int rows = dataGridView1.RowCount;
@@ -281,9 +303,9 @@ namespace WinFormsApp1
                 {
                     for (int j = 0; j < cols; j++)
                     {
-                        if (Convert.ToString(dataGridView1.Rows[i].Cells[j].Value) == "1" && zeroGrid[i, j])
+                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 1 && zeroGrid[i, j])
                         {
-                            dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.Red; //красим циферки
+                            ColoringFore(i, j);
                         }
                     }
                 }
@@ -291,13 +313,82 @@ namespace WinFormsApp1
                 {
                     for (int j = 0; j < cols; j++)
                     {
-                        if (Convert.ToString(dataGridView1.Rows[i].Cells[j].Value) == "2" && zeroGrid[i, j])
+                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 2 && zeroGrid[i, j])
                         {
-                            dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.Red; //красим циферки
+                            ColoringFore(i, j);
                         }
                     }
                 }
-                //сделать то же для остальных цифр
+                if (f3 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 3 && zeroGrid[i, j])
+                        {
+                            ColoringFore(i, j);
+                        }
+                    }
+                }
+                if (f4 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 4 && zeroGrid[i, j])
+                        {
+                            ColoringFore(i, j);
+                        }
+                    }
+                }
+                if (f5 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 5 && zeroGrid[i, j])
+                        {
+                            ColoringFore(i, j);
+                        }
+                    }
+                }
+                if (f6 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 6 && zeroGrid[i, j])
+                        {
+                            ColoringFore(i, j);
+                        }
+                    }
+                }
+                if (f7 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 7 && zeroGrid[i, j])
+                        {
+                            ColoringFore(i, j);
+                        }
+                    }
+                }
+                if (f8 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 8 && zeroGrid[i, j])
+                        {
+                            ColoringFore(i, j);
+                        }
+                    }
+                }
+                if (f9 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 9 && zeroGrid[i, j])
+                        {
+                            ColoringFore(i, j);
+                        }
+                    }
+                }
             }
 
         }
