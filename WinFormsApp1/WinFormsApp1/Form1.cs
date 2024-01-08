@@ -1,10 +1,6 @@
 using System.CodeDom.Compiler;
 using System.Data;
 using System.Windows.Forms;
-using System;
-//using System.Threading;
-using System.Threading.Tasks;
-
 
 namespace WinFormsApp1
 {
@@ -190,22 +186,6 @@ namespace WinFormsApp1
             Transponing(); //транспонирование
         }
 
-        private bool CheckingMap()
-        {
-            int rows = dataGridView1.RowCount;
-            int cols = dataGridView1.ColumnCount;
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    if (grid[i, j] != -1)
-                        dataGridView1.Rows[i].Cells[j].Value = grid[i, j];
-                    else continue;
-                }
-            }
-            return true;
-        }
-
         private void НоваяИграToolStripMenuItem_Click(object sender, EventArgs e)
         {
             label1.Visible = false;
@@ -220,7 +200,7 @@ namespace WinFormsApp1
             BasicFill();
 
             int mixx = ran.Next(10, 100); //выбираем число перемешиваний. Можно не 40. И не 50
-            //гарантировано, что поле решаемо
+            //гарантировано, что поле решаемо (см код выше)
             for (int i = 0; i < mixx; i++)
             {
                 Transponing();
@@ -251,28 +231,19 @@ namespace WinFormsApp1
             /* конец расстановок */
         }
 
-        /* хорошая, но не эффективная вещь */
-        /*public static async Task AddDelayExample()
+        private int ColoringFore(int i, int j, int allCells)
         {
-            // Wait for 5 seconds
-            await Task.Delay(5000);
-        }*/
-
-        private void ColoringFore(int i, int j)
-        {
-            
             dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.Red; //красим циферки
-            /*Task.Run(async delegate
-            {
-                await AddDelayExample();
-            }).Wait();*/
-            //dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.Black; //back to black
+            allCells = 0; //не считаем цифры
+            pon.Visible = true;
+            return (allCells);
         }
 
         private void CheckToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int rows = dataGridView1.RowCount;
             int cols = dataGridView1.ColumnCount;
+            int allCells = 0;
 
             //заполняем сетку
             for (int i = 0; i < rows; i++)
@@ -285,27 +256,27 @@ namespace WinFormsApp1
                         grid[i, j] = Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value);
                         switch (grid[i, j])
                         {
-                            case 1: f1++; break;
-                            case 2: f2++; break;
-                            case 3: f3++; break;
-                            case 4: f4++; break;
-                            case 5: f5++; break;
-                            case 6: f6++; break;
-                            case 7: f7++; break;
-                            case 8: f8++; break;
-                            case 9: f9++; break;
+                            case 1: f1++; allCells++; break;
+                            case 2: f2++; allCells++; break;
+                            case 3: f3++; allCells++; break;
+                            case 4: f4++; allCells++; break;
+                            case 5: f5++; allCells++; break;
+                            case 6: f6++; allCells++; break;
+                            case 7: f7++; allCells++; break;
+                            case 8: f8++; allCells++; break;
+                            case 9: f9++; allCells++; break;
                         }
                     }
                 }
 
                 //извлекаем флаги-счетчики
-                if(f1 > 1)
+                if (f1 > 1)
                 {
                     for (int j = 0; j < cols; j++)
                     {
                         if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 1 && zeroGrid[i, j])
                         {
-                            ColoringFore(i, j);
+                            allCells = ColoringFore(i, j, allCells);
                         }
                     }
                 }
@@ -315,7 +286,7 @@ namespace WinFormsApp1
                     {
                         if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 2 && zeroGrid[i, j])
                         {
-                            ColoringFore(i, j);
+                            allCells = ColoringFore(i, j, allCells);
                         }
                     }
                 }
@@ -325,7 +296,7 @@ namespace WinFormsApp1
                     {
                         if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 3 && zeroGrid[i, j])
                         {
-                            ColoringFore(i, j);
+                            allCells = ColoringFore(i, j, allCells);
                         }
                     }
                 }
@@ -335,7 +306,7 @@ namespace WinFormsApp1
                     {
                         if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 4 && zeroGrid[i, j])
                         {
-                            ColoringFore(i, j);
+                            allCells = ColoringFore(i, j, allCells);
                         }
                     }
                 }
@@ -345,7 +316,7 @@ namespace WinFormsApp1
                     {
                         if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 5 && zeroGrid[i, j])
                         {
-                            ColoringFore(i, j);
+                            allCells = ColoringFore(i, j, allCells);
                         }
                     }
                 }
@@ -355,7 +326,7 @@ namespace WinFormsApp1
                     {
                         if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 6 && zeroGrid[i, j])
                         {
-                            ColoringFore(i, j);
+                            allCells = ColoringFore(i, j, allCells);
                         }
                     }
                 }
@@ -365,7 +336,7 @@ namespace WinFormsApp1
                     {
                         if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 7 && zeroGrid[i, j])
                         {
-                            ColoringFore(i, j);
+                            allCells = ColoringFore(i, j, allCells);
                         }
                     }
                 }
@@ -375,7 +346,7 @@ namespace WinFormsApp1
                     {
                         if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 8 && zeroGrid[i, j])
                         {
-                            ColoringFore(i, j);
+                            allCells = ColoringFore(i, j, allCells);
                         }
                     }
                 }
@@ -385,12 +356,41 @@ namespace WinFormsApp1
                     {
                         if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 9 && zeroGrid[i, j])
                         {
-                            ColoringFore(i, j);
+                            allCells = ColoringFore(i, j, allCells);
                         }
                     }
                 }
+            }//здесь заканчивается проверка строк
+            if (allCells == 81)
+            {
+                label1.Visible = true;
             }
 
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //ничего
+        }
+
+        private void Pon_Click(object sender, EventArgs e)
+        {
+            pon.Visible = false;
+            //поменяем стиль обратно
+            //back to black
+            int rows = dataGridView1.RowCount;
+            int cols = dataGridView1.ColumnCount;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (grid[i, j] != -1 && zeroGrid[i, j]) //если ячейка не пустая
+                    {
+                        dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.Black; //заливка ячеек по умолчанию
+                    }
+                    else continue; //проходим далее
+                }
+            }
         }
     }
 }

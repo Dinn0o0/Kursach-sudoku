@@ -35,6 +35,7 @@
             среднийToolStripMenuItem = new ToolStripMenuItem();
             сложныйToolStripMenuItem = new ToolStripMenuItem();
             новаяИграToolStripMenuItem = new ToolStripMenuItem();
+            checkToolStripMenuItem = new ToolStripMenuItem();
             dataGridView1 = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
@@ -46,7 +47,7 @@
             Column8 = new DataGridViewTextBoxColumn();
             Column9 = new DataGridViewTextBoxColumn();
             label1 = new Label();
-            checkToolStripMenuItem = new ToolStripMenuItem();
+            pon = new Button();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -97,6 +98,13 @@
             новаяИграToolStripMenuItem.Text = "Новая игра";
             новаяИграToolStripMenuItem.Click += НоваяИграToolStripMenuItem_Click;
             // 
+            // checkToolStripMenuItem
+            // 
+            checkToolStripMenuItem.Name = "checkToolStripMenuItem";
+            checkToolStripMenuItem.Size = new Size(86, 21);
+            checkToolStripMenuItem.Text = "Проверить";
+            checkToolStripMenuItem.Click += CheckToolStripMenuItem_Click;
+            // 
             // dataGridView1
             // 
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -108,6 +116,7 @@
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.Size = new Size(400, 300);
             dataGridView1.TabIndex = 2;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // Column1
             // 
@@ -164,18 +173,23 @@
             label1.Text = "Всё верно!";
             label1.Visible = false;
             // 
-            // checkToolStripMenuItem
+            // pon
             // 
-            checkToolStripMenuItem.Name = "checkToolStripMenuItem";
-            checkToolStripMenuItem.Size = new Size(86, 21);
-            checkToolStripMenuItem.Text = "Проверить";
-            checkToolStripMenuItem.Click += CheckToolStripMenuItem_Click;
+            pon.Location = new Point(426, 300);
+            pon.Name = "pon";
+            pon.Size = new Size(75, 23);
+            pon.TabIndex = 4;
+            pon.Text = "Понятно";
+            pon.UseVisualStyleBackColor = true;
+            pon.Visible = false;
+            pon.Click += Pon_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(554, 561);
+            Controls.Add(pon);
             Controls.Add(label1);
             Controls.Add(dataGridView1);
             Controls.Add(menuStrip1);
@@ -209,5 +223,6 @@
         private DataGridViewTextBoxColumn Column9;
         private Label label1;
         private ToolStripMenuItem checkToolStripMenuItem;
+        private Button pon;
     }
 }
