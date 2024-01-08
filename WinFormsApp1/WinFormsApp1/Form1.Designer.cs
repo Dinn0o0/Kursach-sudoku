@@ -116,7 +116,7 @@
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.Size = new Size(400, 300);
             dataGridView1.TabIndex = 2;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellContentClick += DataGridView1_CellContentClick;
             // 
             // Column1
             // 

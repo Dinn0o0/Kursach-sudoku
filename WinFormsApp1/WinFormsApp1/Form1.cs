@@ -15,13 +15,13 @@ namespace WinFormsApp1
             GenerateMap();
         }
 
-        public void GenerateMap() //создание пустого пол€
+        private void GenerateMap() //создание пустого пол€
         {
             for (int i = 0; i < 8; i++) //перва€ строка уже есть
             {
                 dataGridView1.Rows.Add(); //добавл€ет строки в dataGridView1
             }
-
+            
             /* делаем красивое поле */
             for (int i = 0; i < 9; i++) //здесь происходит выравнивание размеров €чеек
             {
@@ -61,7 +61,7 @@ namespace WinFormsApp1
             /* конец покраски */
         }
 
-        public void BasicFill() //хорошее готовое поле. Ќо оно полностью заполнено. ѕолностью решено
+        private void BasicFill() //хорошее готовое поле. Ќо оно полностью заполнено. ѕолностью решено
         {
             for (int i = 0; i < 9; i++)
             {
@@ -72,7 +72,7 @@ namespace WinFormsApp1
             }
         }
 
-        public void Filling()
+        private void Filling()
         {
             int rows = dataGridView1.RowCount;
             int cols = dataGridView1.ColumnCount;
@@ -83,14 +83,14 @@ namespace WinFormsApp1
                     if (grid[i, j] != -1) //если €чейка не пуста€
                     {
                         dataGridView1.Rows[i].Cells[j].Value = grid[i, j];
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.LightPink; //заливка €чеек по умолчанию
+                        dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.DarkViolet; //цвет цифр по умолчанию
                     }
                     else continue; //проходим далее
                 }
             }
         }
 
-        public static void Deleting(int delete0)
+        private static void Deleting(int delete0)
         {
             for (int k = 0; k < delete0; k++)
             {
@@ -231,20 +231,20 @@ namespace WinFormsApp1
             /* конец расстановок */
         }
 
-        private int ColoringFore(int i, int j, int allCells)
+        private int ColoringFore(int i, int j, int allCells) //выделение ошибок
         {
             dataGridView1.Rows[i].Cells[j].Style.ForeColor = Color.Red; //красим циферки
-            allCells = 0; //не считаем цифры
-            pon.Visible = true;
+            allCells = 0; //не считаем цифры, не считаем ничего
+            pon.Visible = true; //делаем видимой кнопку
             return (allCells);
         }
 
-        private void CheckToolStripMenuItem_Click(object sender, EventArgs e)
+        private int CheckingMap()
         {
-            int rows = dataGridView1.RowCount;
-            int cols = dataGridView1.ColumnCount;
-            int allCells = 0;
-
+            int rows = dataGridView1.RowCount; //кол-во строк
+            int cols = dataGridView1.ColumnCount; //кол-во столбцов
+            int allCells = 0; //подсчет правильно поставленных цифр -> понадобитс€ дл€ проверки на окончание игры
+            
             //заполн€ем сетку
             for (int i = 0; i < rows; i++)
             {
@@ -360,24 +360,66 @@ namespace WinFormsApp1
                         }
                     }
                 }
-            }//здесь заканчиваетс€ проверка строк
-            if (allCells == 81)
-            {
-                label1.Visible = true;
-            }
-
+            }//здесь заканчиваетс€ проверка строк на повтор€ющиес€ цифры
+            return allCells; //возвращаем кол-во клеток
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private int VeryfySquares()
+        {
+            int val = 0;
+            for (int n = 0; n < 3; n++)
+            {
+                for (int m = 0; m < 3; m++)
+                {
+                    List<int> list = new List<int>(9); //список всех правильных клеток
+                    /* начинаем проверку в квадрате */
+                    for (int i = 0 + n * 3; i < 3 + n * 3; i++) //проверка в квадрате
+                    {
+                        for (int j = 0 + 3 * m; j < 3 + 3 * m; j++)
+                        {
+                            val = grid[i, j];
+                            if (val == -1)   // если val=-1 -> не заполенна€ клетка
+                            {
+                                continue;
+                            }
+                            if (list.Contains(val)) //если в квадрате уже есть это значение
+                            {                                
+                                return 0; //обнул€ем клетки
+                            }
+                            else
+                                list.Add(val); //значени€ нет -> добавл€ем
+                        }
+                    }
+                    /* конец проверки */
+                }
+            }
+            return 81; //все клетки прошли проверку
+        }
+        private void CheckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int allCells = 0; //подсчет правильно поставленных цифр -> понадобитс€ дл€ проверки на окончание игры
+
+            allCells += CheckingMap(); //проверка на строки
+            Transponing(); //проверка столбцов
+            allCells += CheckingMap();
+            Transponing(); //возвращаем сетку на место                       
+            allCells += VeryfySquares(); //проверка на квадраты
+
+            if(allCells == 81*3)
+            {
+                label1.Visible = true;
+            }            
+        }
+
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             //ничего
         }
 
         private void Pon_Click(object sender, EventArgs e)
         {
-            pon.Visible = false;
             //помен€ем стиль обратно
-            //back to black
+            pon.Visible = false;            
             int rows = dataGridView1.RowCount;
             int cols = dataGridView1.ColumnCount;
             for (int i = 0; i < rows; i++)
