@@ -140,6 +140,10 @@ namespace WinFormsApp1
                     int tmp = grid[i, j];
                     grid[i, j] = grid[j, i];
                     grid[j, i] = tmp;
+
+                    bool tmp1 = zeroGrid[i, j];
+                    zeroGrid[i, j] = zeroGrid[j, i];
+                    zeroGrid[j, i] = tmp1;
                 }
             }
         }
@@ -239,13 +243,207 @@ namespace WinFormsApp1
             return (allCells);
         }
 
-        private int CheckingMap()
+        private int CheckingMap(int prov)
         {
-            int rows = dataGridView1.RowCount; //кол-во строк
-            int cols = dataGridView1.ColumnCount; //кол-во столбцов
+            int rows = 9; //кол-во строк
+            int cols = 9; //кол-во столбцов
             int allCells = 0; //подсчет правильно поставленных цифр -> понадобитс€ дл€ проверки на окончание игры
             
             //заполн€ем сетку
+            for (int i = 0; i < rows; i++)
+            {
+                int f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0, f6 = 0, f7 = 0, f8 = 0, f9 = 0;
+                for (int j = 0; j < cols; j++)
+                {
+                    if (grid[i, j] != -1)
+                    {
+                        switch (grid[i, j])
+                        {
+                            case 1: f1++; allCells++; break;
+                            case 2: f2++; allCells++; break;
+                            case 3: f3++; allCells++; break;
+                            case 4: f4++; allCells++; break;
+                            case 5: f5++; allCells++; break;
+                            case 6: f6++; allCells++; break;
+                            case 7: f7++; allCells++; break;
+                            case 8: f8++; allCells++; break;
+                            case 9: f9++; allCells++; break;
+                        }
+                    }
+                }
+
+                //извлекаем флаги-счетчики
+                if (f1 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (grid[i, j] == 1 && zeroGrid[i, j])
+                        {
+                            if(prov == 0)
+                                allCells = ColoringFore(i, j, allCells);
+                            else
+                                allCells = ColoringFore(j, i, allCells);
+                        }
+                    }
+                }
+                if (f2 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (grid[i, j] == 2 && zeroGrid[i, j])
+                        {
+                            if (prov == 0)
+                                allCells = ColoringFore(i, j, allCells);
+                            else
+                                allCells = ColoringFore(j, i, allCells);
+                        }
+                    }
+                }
+                if (f3 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (grid[i, j] == 3 && zeroGrid[i, j])
+                        {
+                            if (prov == 0)
+                                allCells = ColoringFore(i, j, allCells);
+                            else
+                                allCells = ColoringFore(j, i, allCells);
+                        }
+                    }
+                }
+                if (f4 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (grid[i, j] == 4 && zeroGrid[i, j])
+                        {
+                            if (prov == 0)
+                                allCells = ColoringFore(i, j, allCells);
+                            else
+                                allCells = ColoringFore(j, i, allCells);
+                        }
+                    }
+                }
+                if (f5 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (grid[i, j] == 5 && zeroGrid[i, j])
+                        {
+                            if (prov == 0)
+                                allCells = ColoringFore(i, j, allCells);
+                            else
+                                allCells = ColoringFore(j, i, allCells);
+                        }
+                    }
+                }
+                if (f6 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (grid[i, j] == 6 && zeroGrid[i, j])
+                        {
+                            if (prov == 0)
+                                allCells = ColoringFore(i, j, allCells);
+                            else
+                                allCells = ColoringFore(j, i, allCells);
+                        }
+                    }
+                }
+                if (f7 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (grid[i, j] == 7 && zeroGrid[i, j])
+                        {
+                            if (prov == 0)
+                                allCells = ColoringFore(i, j, allCells);
+                            else
+                                allCells = ColoringFore(j, i, allCells);
+                        }
+                    }
+                }
+                if (f8 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (grid[i, j] == 8 && zeroGrid[i, j])
+                        {
+                            if (prov == 0)
+                                allCells = ColoringFore(i, j, allCells);
+                            else
+                                allCells = ColoringFore(j, i, allCells);
+                        }
+                    }
+                }
+                if (f9 > 1)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (grid[i, j] == 9 && zeroGrid[i, j])
+                        {
+                            if (prov == 0)
+                                allCells = ColoringFore(i, j, allCells);
+                            else
+                                allCells = ColoringFore(j, i, allCells);
+                        }
+                    }
+                }
+            }//здесь заканчиваетс€ проверка строк на повтор€ющиес€ цифры
+            return allCells; //возвращаем кол-во клеток
+        }
+
+        private int VeryfySquares()
+        {
+            int val = 0;
+            for (int n = 0; n < 3; n++)
+            {
+                for (int m = 0; m < 3; m++)
+                {
+                    List<int> list = new List<int>(9); //список всех правильных клеток
+                    List<int> itmp = new List<int>(9);
+                    List<int> jtmp = new List<int>(9);
+                    /* начинаем проверку в квадрате */
+                    for (int i = 0 + n * 3; i < 3 + n * 3; i++) //проверка в квадрате
+                    {
+                        for (int j = 0 + 3 * m; j < 3 + 3 * m; j++) 
+                        {
+                            val = grid[i, j];
+                            if (val == -1)   // если val=-1 -> не заполенна€ клетка
+                            {
+                                continue;
+                            }
+                            if (list.Contains(val)) //если в квадрате уже есть это значение
+                            {
+                                if (!zeroGrid[i, j]) //если по умолчанию
+                                {
+                                    int index = list.IndexOf(val);
+                                    ColoringFore(itmp[index], jtmp[index], 0);
+                                }  
+                                else //не по умолчанию
+                                    ColoringFore(i, j, 0); //? красит только последнее вхождение. Ёффективно при общей проверке. Ќеэффективно при частичной, тк красит даже цифры по умолчанию
+                                return 0; //обнул€ем клетки
+                            }
+                            else
+                            {
+                                list.Add(val); //значени€ нет -> добавл€ем
+                                itmp.Add(i); //сохр коорд
+                                jtmp.Add(j);
+                            }
+                        }
+                    }
+                    /* конец проверки */
+                }
+            }
+            return 81; //все клетки прошли проверку
+        }
+        private void CheckToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int allCells = 0; //подсчет правильно поставленных цифр -> понадобитс€ дл€ проверки на окончание игры
+            int rows = dataGridView1.RowCount; //кол-во строк
+            int cols = dataGridView1.ColumnCount; //кол-во столбцов
+
             for (int i = 0; i < rows; i++)
             {
                 int f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0, f6 = 0, f7 = 0, f8 = 0, f9 = 0;
@@ -269,139 +467,12 @@ namespace WinFormsApp1
                     }
                 }
 
-                //извлекаем флаги-счетчики
-                if (f1 > 1)
-                {
-                    for (int j = 0; j < cols; j++)
-                    {
-                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 1 && zeroGrid[i, j])
-                        {
-                            allCells = ColoringFore(i, j, allCells);
-                        }
-                    }
-                }
-                if (f2 > 1)
-                {
-                    for (int j = 0; j < cols; j++)
-                    {
-                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 2 && zeroGrid[i, j])
-                        {
-                            allCells = ColoringFore(i, j, allCells);
-                        }
-                    }
-                }
-                if (f3 > 1)
-                {
-                    for (int j = 0; j < cols; j++)
-                    {
-                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 3 && zeroGrid[i, j])
-                        {
-                            allCells = ColoringFore(i, j, allCells);
-                        }
-                    }
-                }
-                if (f4 > 1)
-                {
-                    for (int j = 0; j < cols; j++)
-                    {
-                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 4 && zeroGrid[i, j])
-                        {
-                            allCells = ColoringFore(i, j, allCells);
-                        }
-                    }
-                }
-                if (f5 > 1)
-                {
-                    for (int j = 0; j < cols; j++)
-                    {
-                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 5 && zeroGrid[i, j])
-                        {
-                            allCells = ColoringFore(i, j, allCells);
-                        }
-                    }
-                }
-                if (f6 > 1)
-                {
-                    for (int j = 0; j < cols; j++)
-                    {
-                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 6 && zeroGrid[i, j])
-                        {
-                            allCells = ColoringFore(i, j, allCells);
-                        }
-                    }
-                }
-                if (f7 > 1)
-                {
-                    for (int j = 0; j < cols; j++)
-                    {
-                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 7 && zeroGrid[i, j])
-                        {
-                            allCells = ColoringFore(i, j, allCells);
-                        }
-                    }
-                }
-                if (f8 > 1)
-                {
-                    for (int j = 0; j < cols; j++)
-                    {
-                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 8 && zeroGrid[i, j])
-                        {
-                            allCells = ColoringFore(i, j, allCells);
-                        }
-                    }
-                }
-                if (f9 > 1)
-                {
-                    for (int j = 0; j < cols; j++)
-                    {
-                        if (Convert.ToInt32(dataGridView1.Rows[i].Cells[j].Value) == 9 && zeroGrid[i, j])
-                        {
-                            allCells = ColoringFore(i, j, allCells);
-                        }
-                    }
-                }
-            }//здесь заканчиваетс€ проверка строк на повтор€ющиес€ цифры
-            return allCells; //возвращаем кол-во клеток
-        }
-
-        private int VeryfySquares()
-        {
-            int val = 0;
-            for (int n = 0; n < 3; n++)
-            {
-                for (int m = 0; m < 3; m++)
-                {
-                    List<int> list = new List<int>(9); //список всех правильных клеток
-                    /* начинаем проверку в квадрате */
-                    for (int i = 0 + n * 3; i < 3 + n * 3; i++) //проверка в квадрате
-                    {
-                        for (int j = 0 + 3 * m; j < 3 + 3 * m; j++)
-                        {
-                            val = grid[i, j];
-                            if (val == -1)   // если val=-1 -> не заполенна€ клетка
-                            {
-                                continue;
-                            }
-                            if (list.Contains(val)) //если в квадрате уже есть это значение
-                            {                                
-                                return 0; //обнул€ем клетки
-                            }
-                            else
-                                list.Add(val); //значени€ нет -> добавл€ем
-                        }
-                    }
-                    /* конец проверки */
-                }
+                
             }
-            return 81; //все клетки прошли проверку
-        }
-        private void CheckToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            int allCells = 0; //подсчет правильно поставленных цифр -> понадобитс€ дл€ проверки на окончание игры
 
-            allCells += CheckingMap(); //проверка на строки
+            allCells += CheckingMap(0); //проверка на строки
             Transponing(); //проверка столбцов
-            allCells += CheckingMap();
+            allCells += CheckingMap(1);
             Transponing(); //возвращаем сетку на место                       
             allCells += VeryfySquares(); //проверка на квадраты
 
